@@ -50,7 +50,7 @@ A section isn't just markdown. Match the content to the right type so it renders
 - **Prose & docs** — `document/markdown` (default), `document/text`, `document/html`
 - **Code** — `code/python`, `code/javascript`, `code/typescript`, `code/generic` (gets syntax highlighting)
 - **Data** — `data/csv` for tables, `data/json` / `data/yaml` for structured data. CSV renders as a real sortable table, not a code block.
-- **Images** — use `attach_image_from_url` for public URLs, `attach_image` for raw bytes. Don't paste base64 into a markdown section.
+- **Images** — use `attach_image_from_url` whenever the image is reachable by URL (preferred). `attach_image` (inline base64) works for small, known-good bytes but has a low practical ceiling: long payloads get abbreviated in transit and produce corrupt images. Never paste base64 into a markdown section.
 - **Structured payloads** — `structured/json` for machine-readable output other agents or workflows will consume.
 
 One content type per section. If you're saving a research report with a chart and a data table, that's three sections: prose, image, CSV.
@@ -64,10 +64,12 @@ One content type per section. If you're saving a research report with a chart an
 | `create_section` | Adds a fully-formed section. Use when you already have the content ready. |
 | `start_section` + `update_section` | Pair for streaming long content — start the section, then update as you write. |
 | `edit_section` | Modifies an existing section in place. **Never change the heading** unless the user asks. |
-| `update_section` | Replaces a section wholesale. Use when rewriting, not tweaking. |
+| `update_section` | Partner to `start_section` — fills in the body of a newly started section. Not for modifying existing sections (use `edit_section` for that). |
 | `create_folder` + `move_artifact` | Organize. If 3+ root artifacts share a topic, create a folder and move them in. |
 | `search_artifacts` | Find existing work before creating new. Don't duplicate an artifact the user already has. |
-| `attach_image_from_url` / `attach_image` | Add images — a public URL for the first, raw bytes for the second. |
+| `get_artifact` / `get_section` | Read existing work. **`get_artifact` returns no section bodies by default** — pass `include_bodies: true` for full content, or use `get_section` for a single section. |
+| `attach_image_from_url` | Add an image by public URL. **Preferred** — avoids the inline-base64 ceiling. |
+| `attach_image` | Attach raw bytes (base64). Low practical size ceiling: long payloads get truncated in transit and produce corrupt images. Use only for small, known-good bytes. |
 
 Roles that are easy to confuse: `start_section` / `create_section` are for **new** content. `edit_section` is for **existing** content. Mixing them up produces either phantom sections or overwritten work.
 
@@ -86,6 +88,23 @@ What this means for you:
 - **Read before you write.** Fetch the current state before editing — another collaborator may have changed it since you last saw it.
 - **Don't overwrite other people's work.** If a section was written by the user or another agent, respect their structure and heading.
 - **Attribution is your byline.** The agent name and color the user chose during setup show up next to every section you write. Treat it as signed work — no preamble, no "here is the document you requested", no sign-off.
+
+## Sharing & access
+
+Artifacts can be shared with specific people by email, whole folders can be shared, and anything can be surfaced via public link. When the user asks to share, invite, grant access, or publish an artifact, use the sharing tools — don't just describe what would happen.
+
+**Read before you share.** Call `list_artifact_access` first to see who already has access and at what permission level. Don't re-invite someone who already has access, and don't downgrade or change someone's permission without confirming.
+
+| Tool | What it's for |
+|------|---------------|
+| `create_share_link` / `revoke_share_link` | Generate / kill a public share URL. Use when the user says "share this" without naming a person. |
+| `share_artifact_with_user` | Invite a specific person by email to a single artifact. |
+| `share_folder_with_user` | Invite a person to an entire folder — current and future artifacts in it. |
+| `list_team_members` | Enumerate org members. Prerequisite when you need to look up who to share with. |
+| `list_artifact_access` | See current collaborators and permission levels. Always read before modifying access. |
+| `update_collaborator_permission` | Change an existing collaborator's role. |
+| `remove_artifact_collaborator` | Revoke a user's access. |
+| `set_artifact_visibility` | Flip an artifact between private, org-visible, and public. Use sparingly — prefer share links for one-off external sharing. |
 
 ## Antipatterns
 
