@@ -24,9 +24,10 @@ This package ships as a Claude Code plugin that bundles the MCP connector **and*
 ```
 /plugin marketplace add artygracie/artyfacts-ai
 /plugin install artyfacts@artyfacts
+/mcp                          # find artyfacts, press Enter to authenticate
 ```
 
-That wires up both the remote MCP connector (`https://artyfacts.ai/mcp`) and this skill. No separate `claude mcp add` step needed. Sign in with WorkOS the first time the connector is invoked.
+The first two commands wire up the remote MCP connector (`https://artyfacts.ai/mcp`) and this skill. The third opens the MCP panel where you complete WorkOS sign-in for the connector — Claude Code doesn't auto-trigger OAuth on plugin install, so you do it once here. After that, the connector and skill are loaded for every session.
 
 ### Other CLI agents
 

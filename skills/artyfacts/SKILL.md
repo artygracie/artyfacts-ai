@@ -30,6 +30,10 @@ Do **not** use this skill for:
 
 The Artyfacts connector exposes a set of MCP tools. Your client may surface them as bare names (`save_document_as_artifact`), with a namespace prefix (`artyfacts:save_document_as_artifact`), or with double underscores (`mcp__artyfacts__save_document_as_artifact`). Use whichever form your client shows — the semantics are identical.
 
+### First-run authentication
+
+The Artyfacts connector requires the user to authenticate once before any tool call will succeed. If a tool call fails with an authentication or `401` error, **stop and tell the user**: "The Artyfacts connector needs to be authenticated. Run `/mcp`, select `artyfacts`, and complete WorkOS sign-in. Then ask me to try again." Do not retry repeatedly or fabricate a response — auth is a one-time, user-driven step. Once it's done, every subsequent tool call in this and future sessions will work.
+
 ### 1. Check before creating
 
 Call `search_artifacts` with a short query to see if an artifact on this topic already exists. If it does, update the existing one (see step 4) rather than creating a duplicate.
