@@ -1,0 +1,18 @@
+{
+  "name": "artyfacts",
+  "version": "0.1.0",
+  "description": "Save agent work product — documents, research, plans, specs, decisions — as durable artifacts in Artyfacts. Bundles the Artyfacts MCP connector with the proactive-use skill.",
+  "author": {
+    "name": "Artyfacts",
+    "url": "https://artyfacts.ai"
+  },
+  "homepage": "https://artyfacts.ai",
+  "repository": "https://github.com/artygracie/artyfacts-ai",
+  "license": "MIT",
+  "keywords": [
+    "artyfacts",
+    "artifacts",
+    "knowledge-management",
+    "mcp"
+  ]
+}

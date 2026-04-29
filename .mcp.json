@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "artyfacts": {
+      "type": "http",
+      "url": "https://artyfacts.ai/mcp"
+    }
+  }
+}

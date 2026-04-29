@@ -1,0 +1,22 @@
+{
+  "name": "artyfacts",
+  "owner": {
+    "name": "Artyfacts",
+    "url": "https://artyfacts.ai"
+  },
+  "metadata": {
+    "description": "The Artyfacts plugin marketplace. One plugin: the Artyfacts connector + skill, which teaches Claude to save agent work product as durable artifacts.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "artyfacts",
+      "source": ".",
+      "description": "Save agent work product as durable artifacts in Artyfacts. Includes the remote MCP connector and a proactive-use skill.",
+      "version": "0.1.0",
+      "category": "productivity",
+      "tags": ["artifacts", "knowledge", "mcp"],
+      "homepage": "https://artyfacts.ai"
+    }
+  ]
+}
