@@ -11,7 +11,7 @@
   "plugins": [
     {
       "name": "artyfacts",
-      "source": ".",
+      "source": "./",
       "description": "Save agent work product as durable artifacts in Artyfacts. Includes the remote MCP connector and a proactive-use skill.",
       "version": "0.1.0",
       "category": "productivity",
